@@ -8,7 +8,7 @@ import scala.util.{ Try, Success, Failure }
 
 class Player(_name: String, _coins: Int, _level: String) {
   val name: StringProperty = new StringProperty(_name)
-  val coins: StringProperty = new IntegerProperty(_coins)
+  val coins: IntegerProperty = IntegerProperty(_coins)
   val level: StringProperty = new StringProperty(_level)
 
   def save(): Try[Int] = {
@@ -50,7 +50,7 @@ object Player extends Database{
 
   def getAllPlayer(count: Int): List[Player] = {
     DB readOnly{implicit session =>
-      sql"select * from record order by score desc fetch first ${count} rows only".map(rs => {
+      sql"select * from record order by coins desc fetch first ${count} rows only".map(rs => {
         new Player(
           rs.string("name"),
           rs.int("coins"),
